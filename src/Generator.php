@@ -230,19 +230,18 @@ class Generator
      */
     protected function setProcessors(OpenApiGenerator $generator): void
     {
+        $appendProcessorAfterClass = $this->scanOptions['append-processors-after'] ?? \OpenApi\Processors\BuildPaths::class;
         $processorClasses = Arr::get($this->scanOptions, self::SCAN_OPTION_PROCESSORS, []);
         $newPipeLine = [];
 
-        $generator->getProcessorPipeline()->walk(
-            function (callable $pipe) use ($processorClasses, &$newPipeLine) {
-                $newPipeLine[] = $pipe;
-                if ($pipe instanceof \OpenApi\Processors\BuildPaths) {
-                    foreach ($processorClasses as $customProcessor) {
-                        $newPipeLine[] = new $customProcessor();
-                    }
+        foreach ($generator->getProcessors() as $processor) {
+            $processors[] = $processor;
+            if ($processor instanceof $appendProcessorAfterClass) {
+                foreach ($processorClasses as $customProcessor) {
+                    $processors[] = new $customProcessor();
                 }
             }
-        );
+        }
 
         if (! empty($newPipeLine)) {
             $generator->setProcessorPipeline(new Pipeline($newPipeLine));
