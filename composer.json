@@ -18,6 +18,20 @@
       "email": "darius@matulionis.lt"
     }
   ],
+  "require": {
+    "php": "~8.0",
+    "laravel/framework": ">=v9.0.0",
+    "zircote/swagger-php": "3.*",
+    "swagger-api/swagger-ui": "^3.0",
+    "symfony/yaml": "^5.0",
+    "ext-json": "*"
+  },
+  "require-dev": {
+    "phpunit/phpunit": "9.*",
+    "mockery/mockery": "1.*",
+    "orchestra/testbench": "6.* || 5.*",
+    "php-coveralls/php-coveralls": "^2.0"
+  },
   "autoload": {
     "psr-4": {
       "L5Swagger\\": "src"
