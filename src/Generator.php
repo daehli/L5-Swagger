@@ -221,7 +221,7 @@ class Generator
         $newPipeLine = [];
 
         $generator->getProcessorPipeline()->walk(
-            function (callable $pipe) use ($processorClasses, &$newPipeLine) {
+            function (callable $pipe) use ($processorClasses, $appendProcessorAfterClass, &$newPipeLine) {
                 $newPipeLine[] = $pipe;
                 if ($pipe instanceof $appendProcessorAfterClass) {
                     foreach ($processorClasses as $customProcessor) {
